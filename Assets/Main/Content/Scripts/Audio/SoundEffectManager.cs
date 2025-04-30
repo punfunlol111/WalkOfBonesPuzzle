@@ -44,44 +44,39 @@ public class SoundEffectManager : MonoBehaviour
         SingleSmallDoor.evt_DoorClose += SingleSmallDoor_evt_DoorClose;
         DartTrap.evt_DartTrapFired += DartTrap_evt_DartTrapFired;
         Button.evt_ButtonPress += Button_evt_ButtonPress;
+        NoteSystemUI.evt_OnInteractWithNote += NoteSystemUI_evt_OnInteractWithNote;
     }// this function subscribes to all the events that play sound
 
+    private void NoteSystemUI_evt_OnInteractWithNote() {
+        PlaySound(GetSoundEffect(9), 1.7f, PlayerController.Instance.transform.position);
+    } // interacted with note
     private void Button_evt_ButtonPress() {
         PlaySound(GetSoundEffect(7), 1, PlayerController.Instance.transform.position);
-    }
-
+    } // button pressed
     private void DartTrap_evt_DartTrapFired() {
         PlaySound(GetSoundEffect(7), 1, PlayerController.Instance.transform.position);
-    }
+    } // dart trap fires sound
     private void SingleSmallDoor_evt_DoorClose() {
         PlaySound(GetSoundEffect(6), 1, PlayerController.Instance.transform.position);
-    }
-
+    } // small door close
     private void SingleSmallDoor_evt_DoorOpen() {
         PlaySound(GetSoundEffect(5), 1, PlayerController.Instance.transform.position);
-    }
-
+    } // small door open
     private void Item_evt_OnPutDown(GameObject obj) {
         PlaySound(GetSoundEffect(4), 1, PlayerController.Instance.transform.position);
-    }
-
+    } // player puts item down
     private void Item_evt_OnPickUp(GameObject obj) {
         PlaySound(GetSoundEffect(3), 1, PlayerController.Instance.transform.position);
-    }
-
+    } // player pick up item
     private void PlayerController_evt_PlayerJumping() {
         PlaySound(GetSoundEffect(2), 1, PlayerController.Instance.transform.position);
     } // player jumps
-
     private void PlayerController_evt_PlayerDie() {
         PlaySound(GetSoundEffect(1), 1, PlayerController.Instance.transform.position);
     } // player dies
-
     private void Item_evt_OnCollideAfterBeingThrown(GameObject item) {
         PlaySound(GetSoundEffect(ITEM_THUD_SFX), 1, item.transform.position);
     } // item collides after being thrown
-
-
     #endregion
 
     #region Sound Effect Variables
@@ -95,6 +90,7 @@ public class SoundEffectManager : MonoBehaviour
     public const int DOOR_CLOSE_SFX = 6;
     public const int THROW_TARGET_BROKEN_SFX = 7;
     public const int CLICK_SFX = 8;
+    public const int NOTE_PAGEOPEN_SFX = 9;
     public AudioClip GetSoundEffect(int index) {
         if (index > SoundEffects.Count) { 
             return SoundEffects[0];

@@ -19,13 +19,6 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController Instance;
     // Singleton :)
-
-    private Rigidbody rb; // refrance to the rigidbody attached to the player
-
-    [SerializeField] private Camera playerCamera; // the camera 
-    public Camera PlayerCamera { get { return playerCamera; } }
-
-
     private int playerState; // player state 0 = in control, 1 = not. for when in UI.
 
     #endregion
@@ -81,6 +74,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }// This Function reads all the input from the player
+
     #region Camera And Movement
 
     // Events
@@ -90,6 +84,9 @@ public class PlayerController : MonoBehaviour
 
 
     //Camera
+    [SerializeField] private Camera playerCamera; // the camera 
+    public Camera PlayerCamera { get { return playerCamera; } } // getter for the camera variable
+
     [SerializeField] private Transform playerCamRig;
     private Vector2 mouseDelta;
     [SerializeField] private float cameraSmoothing;
@@ -97,6 +94,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseLook; // The value that will be added tot he camera rotation each frame
 
     //Movement
+    private Rigidbody rb; // refrance to the rigidbody attached to the player
     private Vector2 movementDelta;
     private Vector3 moveVector;
     [SerializeField][Range(0.01f, 1)] private float moveSpeed; // your base ground movespeed
@@ -111,7 +109,6 @@ public class PlayerController : MonoBehaviour
 
     //Jumping
     [SerializeField][Range(2, 1000f)] private float jumpAcceleration; // how fast you jump
-    private bool justLanded;
     private void CameraMovement() {
         mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         Vector2.Scale(mouseDelta, new Vector2(mouseSensitivity * cameraSmoothing, mouseSensitivity * cameraSmoothing));
@@ -204,12 +201,16 @@ public class PlayerController : MonoBehaviour
             return true;
         return false;
     } // Checks to see if the player is sprinting
-    private void OnDrawGizmos() {
-        Gizmos.DrawSphere(transform.position - new Vector3(0, transform.localScale.y - sphereCastStartOffset, 0), sphereCastRadias);
-    }
+    private void CheckMoveing() {
+        if (movementDelta != Vector2.zero && IsGrounded() && playerState == 0) {
+            evt_PlayerMoveing?.Invoke(moveSpeed * GetSpeedMultiplier());
+        } else {
+            evt_PlayerStoped?.Invoke();
+        }
+    } // this function checks if we are moving or not, if so fires the moving event and if not sotps the event
     #endregion
 
-    #region Player State Functions
+    #region Player State
     private void CheckState() { 
         if(playerState == 0) { // if we are in regular mode, lock the cursour and hide it, else show it and rekease it
             Cursor.lockState = CursorLockMode.Locked;
@@ -307,21 +308,12 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }// sees if we can use an item on a lock or something
-
-    private void CheckMoveing() {
-        if (movementDelta != Vector2.zero && IsGrounded() && playerState == 0) {
-            evt_PlayerMoveing?.Invoke(moveSpeed * GetSpeedMultiplier());
-        } else {
-            evt_PlayerStoped?.Invoke();
-        }
-    } // this function checks if we are moving or not, if so fires the moving event and if not sotps the event
+  
     #endregion
     
-    #region Player UI State
+    #region Player UI
 
     // -- Events --
-    public event Action evt_PlayerOpenUI; // opens UI Event
-    public event Action evt_PlayerCloseUI; // cleses UI Event
 
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private Transform canvasUI; // the active canvas that the ui will be rendered on
@@ -335,30 +327,25 @@ public class PlayerController : MonoBehaviour
             currentUIPanel.GetComponent<ReadableNoteUI>().SetNoteTextData(data); // sets the data inside to be the actual text
         } // checks to see if it has the readable note companent, and if so pushes the note data in it.
         
-        evt_PlayerOpenUI?.Invoke(); // invoke event
     } // Enters the readable note UI state. 
     public void ExitUIState() {
         playerState = 0; // sets that state to 0 so the player can move freely
         if (currentUIPanel != null) {  // if the current ui pannel is not null, this would never get called if the player's current ui was null be we check anyway
             Destroy(currentUIPanel.gameObject); // if its no null destory it
-            evt_PlayerCloseUI?.Invoke(); // call the event
         }
     } // Exits the readble note UI state;
 
     // for options menu
-
     public void EnterOptionsMenu() {
         playerState = 1;
         currentUIPanel = optionsMenu;
         optionsMenu.SetActive(true);
-        evt_PlayerOpenUI?.Invoke(); // invoke event
     } // opens the options menu
 
     public void ExitOptionsMenu() {
         playerState = 0;
         currentUIPanel = null;
         optionsMenu.SetActive(false);
-        evt_PlayerCloseUI?.Invoke();
     } // exits the options menu
     #endregion
 

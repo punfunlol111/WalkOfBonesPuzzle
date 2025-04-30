@@ -22,7 +22,6 @@ public class PlayerSoundManager : MonoBehaviour
         PlayerController.Instance.evt_PlayerMoveing += PlayerController_evt_PlayerMoveing;
         PlayerController.Instance.evt_PlayerStoped += PlayerController_evt_PlayerStoped;
     } // this function subscribes to all the events we need to listen out for
-
     #region Movement
     private void PlayerController_evt_PlayerStoped() {
         if (walkingSource == null)
@@ -34,7 +33,6 @@ public class PlayerSoundManager : MonoBehaviour
             }
         }
     } // called when the player stoped moving
-
     private void PlayerController_evt_PlayerMoveing(float velocity) {
         if (walkingSource == null)
             return;

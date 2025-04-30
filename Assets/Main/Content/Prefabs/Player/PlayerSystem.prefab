@@ -58,6 +58,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f39705a542b3fc84f8e194a1ad0755a6, type: 3}
   - {fileID: 8300000, guid: f2fb87200f0e4634c8c8592a96c07cb1, type: 3}
   - {fileID: 8300000, guid: f2fb87200f0e4634c8c8592a96c07cb1, type: 3}
+  - {fileID: 8300000, guid: 1fb39b96dcf4b164396ee6b068f62b87, type: 3}
 --- !u!1 &1393612233550082911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,7 +1091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkingSource: {fileID: 6202491966779342596}
-  targetWalkVolume: 0.8
+  targetWalkVolume: 0.7
   walkingClip: {fileID: 8300000, guid: b19914b5054ced9498fdd5864ff9eda7, type: 3}
 --- !u!82 &6202491966779342596
 AudioSource:

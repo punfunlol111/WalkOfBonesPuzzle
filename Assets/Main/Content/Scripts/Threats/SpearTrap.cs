@@ -10,7 +10,6 @@ public class SpearTrap : MonoBehaviour
     /// This is the spear trap it bounces up and down trying to stab the player
     /// </summary>
 
-    public static event Action<Vector3> evt_SpearAttack; // vec 3 pos
 
     [SerializeField] private Transform startPoint; // the place where the trap starts
     [Range(0.001f, 0.05f)] [SerializeField] private float speed; // how fast the trap moves
@@ -63,7 +62,6 @@ public class SpearTrap : MonoBehaviour
         } else {
             if(Vector3.Distance(transform.position, startPoint.position) < .1f) { // if the distance to the start position is small the go back to attacking
                 attacking = true; // yes attack
-                evt_SpearAttack?.Invoke(transform.position); // attacking start
                 traveledDistance = 0f; // travled distance 0 (even though its alread zero)
                 oldPosition = transform.position; // set the old pos
             }
