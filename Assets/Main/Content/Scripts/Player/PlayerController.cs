@@ -175,6 +175,10 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse);
         evt_PlayerJumping?.Invoke();
     } // this sets the jumping state to true and makes us jump
+
+    public void TeleportPlayer(Transform desiredPos) {
+        rb.MovePosition(desiredPos.position);
+    } // teleports the player player to the desired position
     #endregion
 
     #region Movement Checks
