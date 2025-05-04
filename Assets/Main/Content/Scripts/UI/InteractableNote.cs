@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using Bones;
 using System;
 
-public class NoteSystemUI : MonoBehaviour, IInteractable
+public class InteractableNote : MonoBehaviour, IInteractable
 {
 
     public UnityEvent onInteractEvent; // this is optianal if you want an event to fire when reading sokmething

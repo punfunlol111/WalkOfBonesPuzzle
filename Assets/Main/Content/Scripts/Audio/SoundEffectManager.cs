@@ -47,7 +47,7 @@ public class SoundEffectManager : MonoBehaviour
         SingleSmallDoor.evt_DoorClose += SingleSmallDoor_evt_DoorClose;
         DartTrap.evt_DartTrapFired += DartTrap_evt_DartTrapFired;
         Button.evt_ButtonPress += Button_evt_ButtonPress;
-        NoteSystemUI.evt_OnInteractWithNote += NoteSystemUI_evt_OnInteractWithNote;
+        InteractableNote.evt_OnInteractWithNote += NoteSystemUI_evt_OnInteractWithNote;
     }// this function subscribes to all the events that play sound
 
     private void NoteSystemUI_evt_OnInteractWithNote() {
