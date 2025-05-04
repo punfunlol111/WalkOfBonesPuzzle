@@ -15,7 +15,10 @@ public class SoundEffectManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this; // singleton pattern
-        Subscribe();
+    }
+
+    private void Start() {
+        Subscribe(); // subscribe to all the events
     }
 
     #region Playing Sound
@@ -38,9 +41,9 @@ public class SoundEffectManager : MonoBehaviour
         Item.evt_OnCollideAfterBeingThrown += Item_evt_OnCollideAfterBeingThrown;
         Item.evt_OnPickUp += Item_evt_OnPickUp;
         Item.evt_OnPutDown += Item_evt_OnPutDown;
-        PlayerController.Instance.evt_PlayerDie += PlayerController_evt_PlayerDie;
-        PlayerController.Instance.evt_PlayerJumping += PlayerController_evt_PlayerJumping;
         SingleSmallDoor.evt_DoorOpen += SingleSmallDoor_evt_DoorOpen;
+        PlayerController.Instance.evt_PlayerJumping += PlayerController_evt_PlayerJumping;
+        PlayerController.Instance.evt_PlayerDie += PlayerController_evt_PlayerDie;
         SingleSmallDoor.evt_DoorClose += SingleSmallDoor_evt_DoorClose;
         DartTrap.evt_DartTrapFired += DartTrap_evt_DartTrapFired;
         Button.evt_ButtonPress += Button_evt_ButtonPress;
