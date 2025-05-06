@@ -141,24 +141,24 @@ public class PlayerController : MonoBehaviour
     } // this function handles moveing the player
     private void Decelerate() {
         if (movementDelta != Vector2.zero)
-            return;
-        rb.velocity = new Vector3(
+            return; // if we are still moveing dont decelerate
+        rb.velocity = new Vector3( // if we are not moving lerp our x and z velocity to 0
             Mathf.Lerp(rb.velocity.x, 0, decelerationSpeed),
             rb.velocity.y,
             Mathf.Lerp(rb.velocity.z, 0, decelerationSpeed)
         );
     } // Decelerates the player slowly after not hitting the move keys
     private void ClampVelocity() {
-        float maxSpeedWithMultipliers = maxSpeed * GetSpeedMultiplier();
-        float velcotyXZMagnitude = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
+        float maxSpeedWithMultipliers = maxSpeed * GetSpeedMultiplier(); // get our max speed with the multipler of if we are sprinting or jumping
+        float velcotyXZMagnitude = new Vector2(rb.velocity.x, rb.velocity.z).magnitude; // get the magnitude of out x and z velocity
         if (velcotyXZMagnitude < maxSpeedWithMultipliers)
-            return;
-        Vector2 clampedVelocity = Vector2.ClampMagnitude(new Vector2(rb.velocity.x, rb.velocity.z), maxSpeedWithMultipliers);
+            return; // if the our velocity magnitude is smaller then the max speed we stop and return there is no need to clamp
+        Vector2 clampedVelocity = Vector2.ClampMagnitude(new Vector2(rb.velocity.x, rb.velocity.z), maxSpeedWithMultipliers); // clams the x and z with out max speed
         rb.velocity = new Vector3(
           clampedVelocity.x,
           rb.velocity.y,
-          clampedVelocity.y
-          );
+          clampedVelocity.y // this is z just stored in a vec2 cuz we dont need the y.
+        ); // set our velocity to the max velocity
     }// clams our max speed
     public float GetSpeedMultiplier() {
         float speedMultiplier = 1;

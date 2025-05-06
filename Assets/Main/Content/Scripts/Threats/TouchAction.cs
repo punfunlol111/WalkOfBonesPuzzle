@@ -28,7 +28,7 @@ public class TouchAction : MonoBehaviour
                 canTouch = true;
                 timeTillCanTouch = 0;
             }
-        } // timer counting down till when we acan touch
+        } // timer counting down till when we can touch again
     }
 
     private void OnCollisionEnter(Collision collision) {

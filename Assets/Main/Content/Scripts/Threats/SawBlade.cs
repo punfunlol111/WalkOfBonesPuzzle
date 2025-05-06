@@ -5,11 +5,9 @@ using UnityEngine.UIElements;
 
 public class SawBlade : MonoBehaviour {
 
-    #region Refrances
     private TouchKill touchKill; // a refrance to the touch kill script attached
     private Rigidbody rb; // refrance to the rigidbody
-    private Collider col; // refrances the collider on the blade
-    #endregion
+    private Collider bladeCollider; // refrances the collider on the blade
     
 
     [SerializeField] private bool startActive; // do we want the sawblade to start Active
@@ -26,7 +24,7 @@ public class SawBlade : MonoBehaviour {
     private void Awake() {
         touchKill = GetComponent<TouchKill>(); // gets the toch kill sctript
         rb = GetComponent<Rigidbody>(); // gets the rigidbody
-        col = GetComponent<Collider>();
+        bladeCollider = GetComponent<Collider>();
     }
     void Start() {
         if(targetPoints.Length < 2) 
@@ -75,7 +73,7 @@ public class SawBlade : MonoBehaviour {
         isActive = true;
         touchKill.Activate();
         rb.freezeRotation = false;
-        col.isTrigger = true;
+        bladeCollider.isTrigger = true;
         rb.isKinematic = false;
     } // activates the sawblade
 
@@ -84,7 +82,7 @@ public class SawBlade : MonoBehaviour {
         touchKill.Deactivate();
         rb.velocity = Vector3.zero;
         rb.freezeRotation = true;
-        col.isTrigger = false;
+        bladeCollider.isTrigger = false;
         rb.isKinematic = true;
     } //deactivates the sawblade so its harmless
 
@@ -101,3 +99,4 @@ public class SawBlade : MonoBehaviour {
 
     #endregion
 }
+

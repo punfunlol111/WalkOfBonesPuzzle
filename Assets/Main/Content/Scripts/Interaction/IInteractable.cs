@@ -9,10 +9,10 @@ public interface IInteractable
     /// </summary>
     public void OnInteract() {
 
-    }
+    } // when we interact with anything
     public void OnHover() {
 
-    }
+    } // when we hover over anything
 
     public bool CanInteract() {
         return true;
